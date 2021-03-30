@@ -1,2 +1,2 @@
 # InternetReporter
-Small bash script to record exact times when internet goes down
+Small network monitoring tool with a web interface to display the log data.

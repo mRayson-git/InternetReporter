@@ -1,0 +1,26 @@
+{
+  "name": "internetreporter",
+  "version": "1.0.0",
+  "description": "Network Monitoring Tool",
+  "main": "app.js",
+  "scripts": {
+    "dev": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mRayson-git/InternetReporter.git"
+  },
+  "author": "Michael Rayson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mRayson-git/InternetReporter/issues"
+  },
+  "homepage": "https://github.com/mRayson-git/InternetReporter#readme",
+  "dependencies": {
+    "bootstrap": "^5.0.0-beta2",
+    "chart.js": "^2.9.4",
+    "express": "^4.17.1",
+    "express-handlebars": "^5.2.1",
+    "moment": "^2.29.1"
+  }
+}

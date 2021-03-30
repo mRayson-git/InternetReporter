@@ -1,0 +1,21 @@
+<div class="container">
+    <h1>Log File Graphs</h1>
+    <div class="card">
+        <div class="card-body">
+            <form action="/graph" method="GET">
+                <div class="row">
+                    <div class="col-11">
+                        <select class="form-select" name="logfile" id="logfile">
+                            {{#each logfiles}}
+                                <option value={{this}}>{{this}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="col-1">
+                        <input type="submit" class="btn btn-info" value="Graph">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
