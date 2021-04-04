@@ -48,6 +48,7 @@ router.get('/', (req, res) => {
             });
             logtimes.pop(logtimes);
             logdata.pop(logtimes);
+            anomalousLogs.pop();
             console.log(fulllog);
         }
         res.render('graph', {

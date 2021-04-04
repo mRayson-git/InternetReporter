@@ -19,6 +19,7 @@
   "dependencies": {
     "bootstrap": "^5.0.0-beta2",
     "chart.js": "^2.9.4",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-handlebars": "^5.2.1",
     "moment": "^2.29.1"
