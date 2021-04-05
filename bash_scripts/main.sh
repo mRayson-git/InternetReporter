@@ -8,8 +8,9 @@ do
     if [[ "$TODAY" > "$CURRDATE" ]]
     then
         CURRDATE=$TODAY
+        LOGFILE="$CURRDATE-Log.txt"
     fi
     ping -D -c 1 www.google.com > ping.txt
-    sed -n '2{p;q;}' $PINGFILE >> $LOGFILE
+    sed -n '2{p;q;}' $PINGFILE >> "./logfiles/$LOGFILE"
     sleep 10
 done

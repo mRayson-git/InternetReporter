@@ -3,6 +3,11 @@ const path = require('path');
 const cors = require('cors')
 var exphbs  = require('express-handlebars');
 
+
+// Start up the bash script
+var exec = require('child_process').exec;
+exec('./bash_scripts/main.sh');
+
 // Start the application
 const app = express();
 

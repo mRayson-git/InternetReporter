@@ -1,4 +1,15 @@
-FROM node:15.13.0-alpine3.10
+FROM ubuntu:20.04
+
+# Install Node and npm 
+RUN apt-get update
+# install curl 
+RUN apt-get -y install curl
+# get install script and pass it to execute: 
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash
+# and install node 
+RUN apt-get -y install nodejs
+# and install ping utility
+RUN apt-get -y install iputils-ping
 
 # Set workdir
 WORKDIR /monitor
@@ -9,11 +20,8 @@ ADD . /monitor
 # Get npm and nodejs
 RUN npm install
 
-# Run the bash script
-RUN ./bash_scripts/main.sh
-
 # Expose a port
 EXPOSE 3000
 
 # Start the node server
-RUN node app
+CMD ["bash", "wrapper_script.sh"]
