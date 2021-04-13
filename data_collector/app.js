@@ -2,6 +2,7 @@ const { exec } = require("child_process");
 const fs = require('fs');
 const dns = require('dns');
 const fetch = require('node-fetch');
+const ping = require('ping');
 
 let currDate = new Date();
 let speedDir = './speed_data/';
@@ -12,7 +13,8 @@ console.log(process.env.TZ);
 setInterval(async () => {
     // Variables
     let today = new Date();
-    const datestring = currDate.getFullYear() + '-' + currDate.getMonth() + '-' + currDate.getDay();
+    const datestring = currDate.toDateString().replace(/\s+/g, '-');
+
     console.log(datestring);
     let speedFile = speedDir+datestring+'.txt';
     let connectivityFile = connectionDir+datestring+'.txt';
@@ -25,29 +27,22 @@ setInterval(async () => {
         connectivityFile = connectionDir+datestring+'.txt';
     }
 
-    // Check connectivity
-    console.log('Checking connectivity...');
-    let connected = await fetch('https://google.com').then(ok => {
-        console.log('Done checking');
-        return true;
-    }).catch(err => {
-        // console.log(err);
-        return false;
+    let res = await ping.promise.probe('www.google.com', {
+        timeout: 2
     });
 
     // Add connectivity information to log file
-    if (connected) {
-        console.log(`Connected\n${today.toLocaleTimeString()}, true\n`);
-        fs.appendFileSync(connectivityFile, `${today.toLocaleTimeString()}, true\n`, err => {
+    if (res.alive) {
+        console.log(`Connected\n${today.toLocaleTimeString()}, 1\n`);
+        fs.appendFileSync(connectivityFile, `${today.getTime()}, ${res.time}, 1\n`, err => {
             if (err) throw err;
         });
     } else {
         console.log('Not connected');
-        fs.appendFileSync(connectivityFile, `${today.toLocaleTimeString()}, false\n`, err => {
+        fs.appendFileSync(connectivityFile, `${today.getTime()}, ${res.time}, 0\n`, err => {
             if (err) throw err;
         });
     }
-
 }, 5000);
 
 

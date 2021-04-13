@@ -23,7 +23,6 @@ app.get('/', (req, res) => {
 });
 
 app.use('/logviewer', require('./routes/logviewer'));
-app.use('/logOverview', require('./routes/logOverview'));
 app.use('/graph', require('./routes/graph'));
 
 app.listen(3000);

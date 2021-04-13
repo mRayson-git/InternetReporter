@@ -7,55 +7,47 @@ const fs = require('fs');
 router.get('/', (req, res) => {
     const logfile = req.query.logfile;
     console.log("Logfile:" + logfile);
-    let logtimes = [];
-    let logdata = [];
-    let fulllog = [];
-    let anomalousLogs = [];
-    fs.readFile('./bash_scripts/logfiles/' + logfile, 'utf-8', (err, data) => {
+    let time = [];
+    let alive = [];
+    let pings = [];
+    let fixedLog = [];
+    fs.readFile('./../data_collector/connection_data/' + logfile, 'utf-8', (err, data) => {
         if (err) {
             console.log("error:" + err);
         } else {
             // Split into individual logs
-            const logs = data.split('\n');
-            let pastTime = 0;
-            console.log("Logs: " + logs[0]);
-            logs.forEach(log => {
-                let completedLog = [];
+            let logs = data.split('\n');
+            
+            for (let log of logs) {
                 if (log.length > 0) {
-                    // Split on spaces
-                    log = log.split(' ');
-        
-                    // Get timestamp
-                    let timestamp = log[0];
-                    timestamp = timestamp.split('.')[0]
-                    timestamp = timestamp.replace('[', '');
-                    timestamp = parseInt(timestamp) * 1000;
-                    pastTime = timestamp;
-                    // Get pingtime
-                    let pingTime = log[8].split('=')[1]
-        
-                    // completedLog.push(new Date(timestamp).toLocaleTimeString());
-                    completedLog.push(timestamp);
-                    completedLog.push(parseFloat(pingTime))
-                } else {
-                    anomalousLogs.push(new Date(pastTime + 30000).toLocaleTimeString());
-                    completedLog.push(pastTime);
-                    completedLog.push(999)
+                    // split into separate sections
+                    log = log.split(',');
+
+                    // date
+                    time.push(log[0]);
+
+                    // ping
+                    if (log[1].trim() == 'unknown') {
+                        log[1] = 999;
+                    } else {
+                        log[1] = parseInt(log[1].trim());
+                    }
+                    pings.push(log[1]);
+                    
+                    // alive
+                    log[2] = parseInt(log[2].trim());
+                    alive.push(log[2]);
+
+                    fixedLog.push(log);
                 }
-                logtimes.push(completedLog[0]);
-                logdata.push(completedLog[1])
-                fulllog.push({time: completedLog[0], ping: completedLog[1]});
-            });
-            logtimes.pop(logtimes);
-            logdata.pop(logtimes);
-            anomalousLogs.pop();
-            console.log(fulllog);
+            }
+            
         }
+        console.log(fixedLog);
         res.render('graph', {
-            logtimes: logtimes,
-            logdata: logdata,
-            fulllog: fulllog,
-            anomalousLogs: anomalousLogs
+            time: time,
+            alive: alive,
+            pings: pings
         });
     });
 });

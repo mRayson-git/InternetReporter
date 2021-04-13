@@ -1,32 +1,80 @@
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+    // sort out chart data
+    let aliveDataLogs = [];
+    let pingDataLogs = [];
+    let alive = [];
+    let time = [];
+    let pings = [];
+    // alive data
+    {{#each alive}}
+        alive.push({{this}});
+    {{/each}}
+
+    // time data
+    {{#each time}}
+        time.push(new Date({{this}}));
+    {{/each}}
+
+    // ping data
+    {{#each pings}}
+        pings.push({{this}});
+    {{/each}}
+
+    // chart information for connection
+    for (let i = 0; i < alive.length; i++) {
+        aliveDataLogs.push([time[i].toLocaleTimeString(), alive[i]]);
+    }
+
+    // chart information for pings
+    for (let i = 0; i < alive.length; i++) {
+        pingDataLogs.push([time[i].toLocaleTimeString(), pings[i]]);
+    }
+
+    // Load the Visualization API and the corechart package.
+    google.charts.load('current', {'packages':['corechart']});
+    // Set a callback to run when the Google Visualization API is loaded.
+    google.charts.setOnLoadCallback(drawCharts);
+
+    function drawCharts() {
+        // alive chart
+        let data = new google.visualization.DataTable();
+        data.addColumn('string', 'Time');
+        data.addColumn('number', 'Connectivity');
+        data.addRows(aliveDataLogs);
+
+        var options = {
+          title: 'Connection Status',
+          legend: { position: 'bottom' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+
+        // ping chart
+        let pingData = new google.visualization.DataTable();
+        pingData.addColumn('string', 'Time');
+        pingData.addColumn('number', 'Ping');
+        pingData.addRows(pingDataLogs);
+
+        var options = {
+          title: 'Ping Data',
+          legend: { position: 'bottom' }
+        };
+
+        var pingChart = new google.visualization.LineChart(document.getElementById('ping_chart'));
+        pingChart.draw(pingData, options);
+    }
+    
+</script>
 <div class="container-fluid">
-    <canvas id="myChart"></canvas>
-    <script>
-        let ctx = document.getElementById('myChart').getContext('2d');
-        let chart = new Chart(ctx, {
-            // The type of chart we want to create
-            type: 'line',
-            // The data for our dataset
-            data: {
-                labels: [{{logtimes}}],
-                datasets: [{
-                    label: 'Ping Time',
-                    backgroundColor: 'rgb(255, 99, 132)',
-                    borderColor: 'rgb(255, 99, 132)',
-                    data: [{{logdata}}],
-                    fill: false
-                }]
-            },
-        
-            // Configuration options go here
-            options: {}
-        });
-    </script>
+    <div id="chart_div"></div>
+    <div id="ping_chart"></div>
 </div>
-<div class="container">
+{{!-- <div class="container">
     {{#each anomalousLogs}}
     <div class="alert alert-warning">
         There was an anomalous log at: {{this}}
     </div>
     {{/each}}
-</div>
+</div> --}}

@@ -8,7 +8,7 @@ router.get('/', (req, res) => {
     fs.readdir('./', (err, files) => {
         console.log(files);
     });
-    fs.readdir('./bash_scripts/logfiles', (err, files) => {
+    fs.readdir('./../data_collector/connection_data', (err, files) => {
         files.forEach(file => {
             logfiles.push(file);
         });
