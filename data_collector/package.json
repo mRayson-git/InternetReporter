@@ -1,0 +1,12 @@
+{
+  "name": "data_collector",
+  "version": "1.0.0",
+  "description": "nodejs app to continually check if internet is connected",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon app",
+    "start": "node app"
+  },
+  "author": "Michael Rayson",
+  "license": "ISC"
+}
