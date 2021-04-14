@@ -13,7 +13,7 @@ console.log(process.env.TZ);
 setInterval(async () => {
     // Variables
     let today = new Date();
-    const datestring = currDate.toDateString().replace(/\s+/g, '-');
+    const datestring = currDate.toLocalDateString().replace('\\', '-');
 
     console.log(datestring);
     let speedFile = speedDir+datestring+'.txt';
