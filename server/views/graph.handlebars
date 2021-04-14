@@ -45,7 +45,6 @@
 
         var aliveChartOptions = {
           title: 'Connection Status',
-          subtitle: 'Boolean value (1 == connection, 0 == none)'
         };
 
         var chart = new google.charts.Line(document.getElementById('chart_div'));
@@ -69,9 +68,9 @@
 </script>
 <div class="container mt-5 text-center">
     <h1 class="display-4">Currently viewing: {{logfile}}</h1>
-    <a href="http://localhost:3000/logviewer">Go back</a>
+    <a href="/logviewer">Go back</a>
 </div>
-<div class="container">
+<div class="container-fluid">
     <div id="chart_div" class="mt-3 card shadow p-3"></div>
     <div id="ping_chart" class="mt-5 card shadow p-3"></div>
 </div>
