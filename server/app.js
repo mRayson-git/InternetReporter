@@ -24,6 +24,7 @@ app.get('/', (req, res) => {
 
 app.use('/logviewer', require('./routes/logviewer'));
 app.use('/graph', require('./routes/graph'));
+app.use('/table', require('./routes/table'));
 
 app.listen(3000);
 

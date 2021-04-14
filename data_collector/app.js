@@ -43,6 +43,6 @@ setInterval(async () => {
             if (err) throw err;
         });
     }
-}, 10000);
+}, 2500);
 
 

@@ -24,7 +24,7 @@ router.get('/', (req, res) => {
                     log = log.split(',');
 
                     // date
-                    time.push(log[0]);
+                    log[0] = new Date(parseInt(log[0]));
 
                     // ping
                     if (log[1].trim() == 'unknown') {
@@ -38,17 +38,18 @@ router.get('/', (req, res) => {
                     log[2] = parseInt(log[2].trim());
                     alive.push(log[2]);
 
-                    fixedLog.push(log);
+                    fixedLog.push({time: log[0].toLocaleTimeString(), ping: log[1], connectivity: log[2]});
                 }
             }
             
         }
-        // console.log(fixedLog);
-        res.render('graph', {
+        console.log(fixedLog);
+        res.render('table', {
             time: time,
             alive: alive,
             pings: pings,
-            logfile: logfile
+            fixedLog: fixedLog,
+            logfile: logfile,
         });
     });
 });
