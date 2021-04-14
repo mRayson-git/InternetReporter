@@ -47,7 +47,8 @@ router.get('/', (req, res) => {
         res.render('graph', {
             time: time,
             alive: alive,
-            pings: pings
+            pings: pings,
+            logfile: logfile
         });
     });
 });

@@ -1,8 +1,8 @@
-<div class="container">
+<div class="container mt-5">
     <h1>Log File Graphs</h1>
     <div class="card">
         <div class="card-body">
-            <form action="/graph" method="GET">
+            <form action="/graph" method="GET" class="mb-3">
                 <div class="row">
                     <div class="col-11">
                         <select class="form-select" name="logfile" id="logfile">
@@ -12,10 +12,11 @@
                         </select>
                     </div>
                     <div class="col-1">
-                        <input type="submit" class="btn btn-info" value="Graph">
+                        <input type="submit" class="btn btn-primary" value="Graph">
                     </div>
                 </div>
             </form>
+            <a href="http://localhost:3000/graph?logfile={{mostRecent}}" class="btn btn-primary">Most Recent Log File</a>
         </div>
     </div>
 </div>
