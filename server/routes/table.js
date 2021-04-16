@@ -21,6 +21,7 @@ router.get('/', (req, res) => {
             for (let log of logs) {
                 if (log.length > 0) {
                     // split into separate sections
+                    let logStyle = '';
                     log = log.split(',');
 
                     // date
@@ -29,6 +30,7 @@ router.get('/', (req, res) => {
                     // ping
                     if (log[1].trim() == 'unknown') {
                         log[1] = 999;
+                        logStyle = 'table-danger';
                     } else {
                         log[1] = parseInt(log[1].trim());
                     }
@@ -38,9 +40,10 @@ router.get('/', (req, res) => {
                     log[2] = parseInt(log[2].trim());
                     alive.push(log[2]);
 
-                    fixedLog.push({time: log[0].toLocaleTimeString(), ping: log[1], connectivity: log[2]});
+                    fixedLog.push({time: log[0].toLocaleTimeString(), ping: log[1], connectivity: log[2], style: logStyle});
                 }
             }
+            fixedLog = fixedLog.reverse();
             
         }
         console.log(fixedLog);
